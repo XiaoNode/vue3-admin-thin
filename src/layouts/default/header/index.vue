@@ -33,6 +33,7 @@
 
     <!-- action  -->
     <div :class="`${prefixCls}-action`">
+      <router-link to="/app-vue">子应用</router-link>
       <AppSearch :class="`${prefixCls}-action__item `" v-if="getShowSearch" />
 
       <Notify v-if="getShowNotice" :class="`${prefixCls}-action__item notify-item`" />

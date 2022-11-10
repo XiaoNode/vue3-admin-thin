@@ -6,7 +6,8 @@
       <LayoutSideBar v-if="getShowSidebar || getIsMobile" />
       <Layout :class="`${prefixCls}-main`">
         <LayoutMultipleHeader />
-        <LayoutContent />
+        <LayoutContent v-if="!isSubApp" />
+        <div id="app-micro" v-show="isSubApp"></div>
         <LayoutFooter />
       </Layout>
     </Layout>
@@ -17,6 +18,9 @@
   import { defineComponent, computed, unref } from 'vue'
   import { Layout } from 'ant-design-vue'
   import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent'
+  import { useRouter } from 'vue-router'
+  import { ref, onMounted, watch } from 'vue'
+  import { start } from 'qiankun'
 
   import LayoutHeader from './header/index.vue'
   import LayoutContent from './content/index.vue'
@@ -54,6 +58,27 @@
         return cls
       })
 
+      const router = useRouter()
+      const isSubApp = ref(false)
+
+      watch(
+        () => router.currentRoute.value.path,
+        (newValue, oldValue) => {
+          console.log('watch', newValue, oldValue)
+          let isSub: boolean = router.currentRoute.value.path.indexOf('app-vue') > -1
+          isSubApp.value = isSub
+        },
+        { immediate: true },
+      )
+
+      onMounted(() => {
+        start({
+          sandbox: {
+            strictStyleIsolation: true,
+          },
+        })
+      })
+
       return {
         getShowFullHeaderRef,
         getShowSidebar,
@@ -61,6 +86,7 @@
         getIsMobile,
         getIsMixSidebar,
         layoutClass,
+        isSubApp,
       }
     },
   })

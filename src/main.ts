@@ -14,6 +14,18 @@ import { setupGlobDirectives } from '/@/directives'
 import { setupI18n } from '/@/locales/setupI18n'
 import { registerGlobComp } from '/@/components/registerGlobComp'
 
+import apps from './micro-app'
+import { registerMicroApps, addGlobalUncaughtErrorHandler } from 'qiankun'
+import './actions'
+
+// 注册微应用
+registerMicroApps(apps)
+
+// 全局的未捕获异常处理器
+addGlobalUncaughtErrorHandler((event) => {
+  console.log(event)
+})
+
 import { isDevMode } from './utils/env'
 
 if (isDevMode()) {

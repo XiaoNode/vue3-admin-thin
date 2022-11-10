@@ -1,6 +1,6 @@
 <template>
   <PageWrapper title="引导页" content="用于给用户的指引操作">
-    11122s
+    11122s33
     <a-button type="primary" @click="handleStart">开始</a-button>
   </PageWrapper>
 </template>
