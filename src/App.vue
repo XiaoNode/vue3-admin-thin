@@ -16,6 +16,6 @@
   // support Multi-language
   const { getAntdLocale } = useLocale()
 
-  // Listening to page changes and dynamically changing site titles
+  // 根据页面设置title
   useTitle()
 </script>
